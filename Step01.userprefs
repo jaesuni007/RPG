@@ -1,9 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\RayMove.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerFSM.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerMove.cs" Line="26" Column="14" />
-      <File FileName="Assets\Scripts\RayMove.cs" Line="33" Column="40" />
+      <File FileName="Assets\Scripts\RayMove.cs" Line="55" Column="17" />
+      <File FileName="Assets\Scripts\FSMBase.cs" Line="49" Column="45" />
+      <File FileName="Assets\Scripts\PlayerFSM.cs" Line="95" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

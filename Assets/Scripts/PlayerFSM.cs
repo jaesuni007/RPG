@@ -12,7 +12,14 @@ public class PlayerFSM : FSMBase
     public float turnSpeed = 360.0f;
 
     public LayerMask layerMask;
-    public float attackRange = 1.5f;
+    public float attackRange    = 1.5f;
+    public float attack         = 100.0f;
+    public int maxHP            = 100;
+    public int currentHP        = 100;
+
+    public Renderer renderer;
+
+    public MonsterFSM monsterFSM;
 
     public override void Awake()
     {
@@ -25,6 +32,8 @@ public class PlayerFSM : FSMBase
         agent.speed = moveSpeed;
         agent.angularSpeed = turnSpeed;
         agent.acceleration = 2000.0f;
+
+        renderer = GetComponentInChildren<Renderer>();
 
         layerMask = LayerMask.GetMask("Click", "Block", "Monster");
     }
@@ -63,6 +72,7 @@ public class PlayerFSM : FSMBase
                     agent.SetDestination(attackPoint.transform.position);
                     SetState(CharacterState.AttackRun);
                     agent.stoppingDistance = attackRange;
+                    monsterFSM = hitInfo.transform.GetComponent<MonsterFSM>();
                 }
             }
         }
@@ -112,11 +122,16 @@ public class PlayerFSM : FSMBase
         {
             yield return null;
             //Stay
-            agent.SetDestination(attackPoint.transform.position);
+            if (state == CharacterState.AttackRun)
+            {
+                agent.SetDestination(attackPoint.transform.position);
+            }
+
             if (agent.remainingDistance <= attackRange)
             {
                 SetState(CharacterState.Attack);
             }
+
         }
 
         //Exit
@@ -130,10 +145,21 @@ public class PlayerFSM : FSMBase
         while (state == CharacterState.Attack)
         {
             yield return null;
-            //Stay
 
+            //Stay
+            if (monsterFSM.IsDead() && RemainTime(0.7))
+            {
+                attackPoint.SetActive(false);
+                SetState(CharacterState.Idle);
+                break;
+            }
         }
 
         //Exit
+    }
+
+    public void OnPlayerAttack()
+    {
+        monsterFSM.ProcessDamage(attack);
     }
 }
